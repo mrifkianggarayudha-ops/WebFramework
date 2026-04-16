@@ -1,26 +1,140 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Cocokkan Fungsi</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Cocokkan Fungsi</title>
+
+<style>
+body {
+  font-family: Arial;
+  text-align: center;
+  background: #f0f8ff;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 30px;
+}
+
+/* Kiri (Hardware) */
+.hardware {
+  background: white;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid #ccc;
+}
+
+.hardware.selected {
+  border-color: blue;
+}
+
+/* Kanan (Fungsi) */
+.function {
+  background: white;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 2px solid #ccc;
+}
+
+.function.correct {
+  background: #4caf50;
+  color: white;
+}
+
+.function.wrong {
+  background: red;
+  color: white;
+}
+</style>
+
 </head>
 <body>
 
-<h1>Cocokkan Fungsi Hardware</h1>
+<h1>⚙️ Cocokkan Fungsi Hardware</h1>
+<p>Pilih hardware lalu pilih fungsi yang sesuai</p>
 
-<div class="game">
-  <div class="column" id="left"></div>
-  <div class="column" id="right"></div>
+<div class="container">
+
+  <!-- HARDWARE -->
+  <div>
+    <div class="hardware" data-name="Keyboard">Keyboard</div>
+    <div class="hardware" data-name="Monitor">Monitor</div>
+    <div class="hardware" data-name="Mouse">Mouse</div>
+  </div>
+
+  <!-- FUNGSI -->
+  <div>
+    <div class="function">Alat input teks</div>
+    <div class="function">Menampilkan output</div>
+    <div class="function">Alat penunjuk</div>
+  </div>
+
 </div>
 
-<button onclick="checkJawaban()">Submit</button>
-<p id="score"></p>
+<h2 id="score">Skor: 0</h2>
 
 <script>
-const mode = "fungsi";
+let selectedHardware = null;
+let score = 0;
+
+const hardwares = document.querySelectorAll(".hardware");
+const functions = document.querySelectorAll(".function");
+const scoreText = document.getElementById("score");
+
+// mapping jawaban benar
+const answers = {
+  "Keyboard": "Alat input teks",
+  "Monitor": "Menampilkan output",
+  "Mouse": "Alat penunjuk"
+};
+
+// pilih hardware
+hardwares.forEach(hw => {
+  hw.addEventListener("click", () => {
+    hardwares.forEach(h => h.classList.remove("selected"));
+    hw.classList.add("selected");
+    selectedHardware = hw;
+  });
+});
+
+// pilih fungsi
+functions.forEach(fn => {
+  fn.addEventListener("click", () => {
+
+    if (!selectedHardware) {
+      alert("Pilih hardware dulu!");
+      return;
+    }
+
+    const correct = answers[selectedHardware.dataset.name];
+
+    if (fn.textContent === correct) {
+      fn.classList.add("correct");
+      score++;
+      scoreText.textContent = "Skor: " + score;
+
+      selectedHardware.style.opacity = "0.5";
+      selectedHardware.style.pointerEvents = "none";
+
+    } else {
+      fn.classList.add("wrong");
+      setTimeout(() => {
+        fn.classList.remove("wrong");
+      }, 800);
+    }
+
+    selectedHardware.classList.remove("selected");
+    selectedHardware = null;
+
+  });
+});
 </script>
-<script src="script.js"></script>
 
 </body>
 </html>
