@@ -3,15 +3,15 @@ let pasangan = [];
 
 // DATA
 const dataHardware = [
-  { nama: "CPU", img: "img/cpu.png" },
-  { nama: "Keyboard", img: "img/keyboard.png" },
-  { nama: "Monitor", img: "img/monitor.png" }
+  { nama: "Keyboard", img: "img/Keyboard.png" },
+  { nama: "Monitor", img: "img/Monitor.png" },
+  { nama: "Mouse", img: "img/Mouse.png" }
 ];
 
 const dataFungsi = [
-  { nama: "CPU", fungsi: "Mengolah data" },
   { nama: "Keyboard", fungsi: "Alat input" },
-  { nama: "Monitor", fungsi: "Menampilkan output" }
+  { nama: "Monitor", fungsi: "Menampilkan output" },
+  { nama: "Mouse", fungsi: "Alat penunjuk" }
 ];
 
 // PILIH DATA
