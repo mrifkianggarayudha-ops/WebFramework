@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Cocokkan Hardware</title>
+
+<style>
+body {
+  font-family: Arial;
+  text-align: center;
+  background: #f5f5f5;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 30px;
+}
+
+/* Gambar */
+.images img {
+  width: 100px;
+  margin: 10px;
+  cursor: pointer;
+  border: 3px solid transparent;
+  border-radius: 10px;
+}
+
+.images img.selected {
+  border-color: blue;
+}
+
+/* Nama */
+.name {
+  background: white;
+  padding: 10px 20px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+}
+
+.name.correct {
+  background: #4caf50;
+  color: white;
+}
+
+.name.wrong {
+  background: red;
+  color: white;
+}
+</style>
+
+</head>
+<body>
+
+<h1>🖥️ Cocokkan Hardware</h1>
+<p>Pilih gambar lalu pilih nama yang sesuai</p>
+
+<div class="container">
+
+  <!-- GAMBAR -->
+  <div class="images">
+    <img src="img/Keyboard.png" data-name="Keyboard">
+    <img src="img/Monitor.png" data-name="Monitor">
+    <img src="img/Mouse.png" data-name="Mouse">
+  </div>
+
+  <!-- NAMA -->
+  <div class="names">
+    <div class="name">Keyboard</div>
+    <div class="name">Monitor</div>
+    <div class="name">Mouse</div>
+  </div>
+
+</div>
+
+<h2 id="score">Skor: 0</h2>
+
+<script>
+let selectedImage = null;
+let score = 0;
+
+const images = document.querySelectorAll(".images img");
+const names = document.querySelectorAll(".name");
+const scoreText = document.getElementById("score");
+
+// pilih gambar
+images.forEach(img => {
+  img.addEventListener("click", () => {
+    images.forEach(i => i.classList.remove("selected"));
+    img.classList.add("selected");
+    selectedImage = img;
+  });
+});
+
+// pilih nama
+names.forEach(name => {
+  name.addEventListener("click", () => {
+
+    if (!selectedImage) {
+      alert("Pilih gambar dulu!");
+      return;
+    }
+
+    const correct = selectedImage.dataset.name;
+
+    if (name.textContent === correct) {
+      name.classList.add("correct");
+      score++;
+      scoreText.textContent = "Skor: " + score;
+
+      selectedImage.style.opacity = "0.5";
+      selectedImage.style.pointerEvents = "none";
+
+    } else {
+      name.classList.add("wrong");
+      setTimeout(() => {
+        name.classList.remove("wrong");
+      }, 800);
+    }
+
+    selectedImage.classList.remove("selected");
+    selectedImage = null;
+
+  });
+});
+</script>
+
+</body>
+</html>
